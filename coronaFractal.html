@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<style>
+			#circle div {
+				position: fixed;
+				
+				border-radius: 50%;
+				border-style: solid;
+				border-color: #d00;
+				border-width: 1px;
+				
+				background-color: #0a0;
+			}
+		</style>
+	</head>
+	<body>
+		<span id = "circle">
+			
+		</span>
+		
+		<script>
+			var span = document.getElementById("circle");
+			var width = window.innerWidth;
+			var height = window.innerHeight;
+			
+			var circles = 7;
+			
+			function createDiv(x, y, r) {
+				var d = document.createElement("div");
+				
+				d.style.left = (x - r) + "px";
+				d.style.top = (y - r) + "px";
+				d.style.width = r*2 + "px";
+				d.style.height = r*2 + "px";
+				
+				span.appendChild(d);
+			}
+			
+			
+			function drawFractal(x, y, r, dir, i) {
+				createDiv(x, y, r);
+				if(i > 4) {
+					return;
+				}
+				
+				var radius = r + r * 0.32;
+				for(var a = dir - Math.PI / 2; a < dir + Math.PI / 2; a += Math.PI * 2 / circles) {
+					var angle = a + Math.PI / circles / 2;
+					drawFractal(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius, radius - r, angle, i + 1);
+				}
+			}
+			
+			drawFractal(width/2, height/2, 200, 0, 0);
+			drawFractal(width/2, height/2, 200, Math.PI + Math.PI / circles, 0);
+		</script>
+	</body>
+</html>
